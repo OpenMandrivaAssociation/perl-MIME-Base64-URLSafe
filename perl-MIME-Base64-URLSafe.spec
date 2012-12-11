@@ -1,19 +1,19 @@
 %define upstream_name    MIME-Base64-URLSafe
 %define upstream_version 0.01
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 1
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	2
 
-Summary:    Perl version of Python's URL-safe base64 codec
-License:    GPL+ or Artistic
-Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/MIME/%{upstream_name}-%{upstream_version}.tar.gz
+Summary:	Perl version of Python's URL-safe base64 codec
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:	http://www.cpan.org/modules/by-module/MIME/%{upstream_name}-%{upstream_version}.tar.gz
 
-BuildRequires: perl(MIME::Base64)
-BuildArch: noarch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
+BuildRequires:	perl-devel
+BuildRequires:	perl(MIME::Base64)
+BuildArch:	noarch
 
 %description
 This module is a perl version of python's URL-safe base64 encoder /
@@ -31,24 +31,25 @@ compatible with python's urlsafe_b64encode / urlsafe_b64decode.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
-
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 
 %check
 %make test
 
 %install
-rm -rf %buildroot
 %makeinstall_std
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
 %doc Changes META.yml README
 %{_mandir}/man3/*
-%perl_vendorlib/MIME/
+%{perl_vendorlib}/MIME/
+
+%changelog
+* Fri Apr 30 2010 Michael Scherer <misc@mandriva.org> 0.10.0-1mdv2010.1
++ Revision: 541083
+- import perl-MIME-Base64-URLSafe
 
 
+* Fri Apr 30 2010 cpan2dist 0.01-1mdv
+- initial mdv release, generated with cpan2dist
